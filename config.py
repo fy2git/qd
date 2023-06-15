@@ -21,6 +21,7 @@ gzip = bool(strtobool(os.getenv('GZIP','True')))                            # �
 accesslog = bool(strtobool(os.getenv('ACCESS_LOG', 'True')))                # 是否输出 Tornado access Log
 display_import_warning = bool(strtobool(os.getenv('DISPLAY_IMPORT_WARNING', 'True')))           # 是否显示导入模组失败或 Redis 连接失败的警告
 user0isadmin = bool(strtobool(os.getenv('USER0ISADMIN','True')))            # 是否将第一个注册用户设置为管理员
+static_url_prefix = os.getenv('STATIC_URL_PREFIX', '/static/')              # 静态文件访问路径前缀, 默认为 '/static/'
 
 # 指定域名, 用于发送邮件及微信推送内链接域名显示,
 # 如果是 *域名* 方式请正确输入 `domain.com`, 请勿包含协议头 `http://` 或 `https://`
@@ -180,8 +181,10 @@ mail_domain_https = bool(strtobool(os.getenv('ENABLE_HTTPS', None) or
 mailgun_key = os.getenv('MAILGUN_KEY',"")                                   # Mailgun Api_Key, 若不为空则优先用 Mailgun 方式发送邮件
 mailgun_domain = os.getenv('MAILGUN_DOMAIN', domain)                        # Mailgun Domain
 
-# Google analytics 设置
-ga_key = os.getenv('GA_KEY', '')                                            # Google analytics 密钥
+# Google Analytics 设置
+ga_key = os.getenv('GA_KEY', '')                                            # Google Analytics (GA) 密钥, 为空则不启用,
+                                                                            # GA 密钥格式为 G-XXXXXXXXXX,
+                                                                            # 如果为 UA-XXXXXXXXX-X, 请前往GA后台获取新版密钥
 
 try:
     from local_config import *  # 修改 `local_config.py` 文件的内容不受通过 Git 更新源码的影响
